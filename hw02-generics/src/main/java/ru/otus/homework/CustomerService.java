@@ -2,10 +2,11 @@ package ru.otus.homework;
 
 import java.util.Comparator;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 
 public class CustomerService {
-    private final TreeMap<Customer, String> customerServiceMap = new TreeMap<>(Comparator.comparingLong(Customer::getScores));
+    private final NavigableMap<Customer, String> customerServiceMap = new TreeMap<>(Comparator.comparingLong(Customer::getScores));
 
     public Map.Entry<Customer, String> getSmallest() {
         Map.Entry<Customer, String> shallowEntry = customerServiceMap.firstEntry();
@@ -21,7 +22,7 @@ public class CustomerService {
         customerServiceMap.put(new Customer(customer.getId(), customer.getName(), customer.getScores()), data);
     }
 
-    public Map.Entry<Customer, String> deepCopy(Map.Entry<Customer, String> shallowEntry) {
+    private Map.Entry<Customer, String> deepCopy(Map.Entry<Customer, String> shallowEntry) {
         return Map.entry(shallowEntry.getKey().getCopy(), shallowEntry.getValue());
     }
 }
