@@ -1,7 +1,6 @@
 package ru.otus.aop;
 
 import ru.otus.annotation.Log;
-import ru.otus.example.TestLogging;
 import ru.otus.example.TestLoggingInterface;
 
 import java.lang.reflect.InvocationHandler;
@@ -16,8 +15,8 @@ public class Ioc {
     private Ioc() {
     }
 
-    public static TestLoggingInterface createLogClass() {
-        InvocationHandler handler = new LoggingInvocationHandler(new TestLogging());
+    public static TestLoggingInterface createLogClass(TestLoggingInterface testLoggingImpl) {
+        InvocationHandler handler = new LoggingInvocationHandler(testLoggingImpl);
         return (TestLoggingInterface) Proxy.newProxyInstance(Ioc.class.getClassLoader(),
                 new Class<?>[]{TestLoggingInterface.class}, handler);
     }
