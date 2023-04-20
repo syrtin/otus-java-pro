@@ -7,5 +7,5 @@ public interface ATM {
 
     Map<Banknote, Integer> withdrawMoney(int amount);
 
-    Integer getBalance();
+    int getBalance();
 }
