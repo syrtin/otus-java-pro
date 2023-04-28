@@ -3,8 +3,8 @@ package ru.otus.handler;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.otus.model.Message;
 import ru.otus.listener.Listener;
+import ru.otus.model.Message;
 import ru.otus.processor.Processor;
 
 import java.util.ArrayList;
@@ -12,12 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ComplexProcessorTest {
 
@@ -25,7 +20,11 @@ class ComplexProcessorTest {
     @DisplayName("Тестируем вызовы процессоров")
     void handleProcessorsTest() {
         //given
-        var message = new Message.Builder(1L).field7("field7").build();
+        var message = Message
+                .builder()
+                .id(1L)
+                .field7("field7")
+                .build();
 
         var processor1 = mock(Processor.class);
         when(processor1.process(message)).thenReturn(message);
@@ -51,7 +50,11 @@ class ComplexProcessorTest {
     @DisplayName("Тестируем обработку исключения")
     void handleExceptionTest() {
         //given
-        var message = new Message.Builder(1L).field8("field8").build();
+        var message = Message
+                .builder()
+                .id(1L)
+                .field8("field8")
+                .build();
 
         var processor1 = mock(Processor.class);
         when(processor1.process(message)).thenThrow(new RuntimeException("Test Exception"));
@@ -77,7 +80,11 @@ class ComplexProcessorTest {
     @DisplayName("Тестируем уведомления")
     void notifyTest() {
         //given
-        var message = new Message.Builder(1L).field9("field9").build();
+        var message = Message
+                .builder()
+                .id(1L)
+                .field9("field9")
+                .build();
 
         var listener = mock(Listener.class);
 
