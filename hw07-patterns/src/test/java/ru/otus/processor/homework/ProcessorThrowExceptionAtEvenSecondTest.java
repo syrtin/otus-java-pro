@@ -13,9 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class ProcessorThrowExceptionAtEvenSecondTest {
 
     private ProcessorThrowExceptionAtEvenSecond processor;
-    private final Message message = Message
-            .builder()
-            .id(1L)
+    private final Message message = new Message.Builder(1L)
             .field1("test")
             .build();
 

@@ -46,8 +46,7 @@ public class HomeWork {
         field13Data.add(data);
         field13.setData(field13Data);
 
-        var message = Message.builder()
-                .id(id)
+        var message = new Message.Builder(id)
                 .field11("field11")
                 .field12("field12")
                 .field13(field13)

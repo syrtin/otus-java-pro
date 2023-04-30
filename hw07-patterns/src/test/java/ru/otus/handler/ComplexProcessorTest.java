@@ -20,11 +20,7 @@ class ComplexProcessorTest {
     @DisplayName("Тестируем вызовы процессоров")
     void handleProcessorsTest() {
         //given
-        var message = Message
-                .builder()
-                .id(1L)
-                .field7("field7")
-                .build();
+        var message = new Message.Builder(1L).field7("field7").build();
 
         var processor1 = mock(Processor.class);
         when(processor1.process(message)).thenReturn(message);
@@ -50,11 +46,7 @@ class ComplexProcessorTest {
     @DisplayName("Тестируем обработку исключения")
     void handleExceptionTest() {
         //given
-        var message = Message
-                .builder()
-                .id(1L)
-                .field8("field8")
-                .build();
+        var message = new Message.Builder(1L).field8("field8").build();
 
         var processor1 = mock(Processor.class);
         when(processor1.process(message)).thenThrow(new RuntimeException("Test Exception"));
@@ -80,11 +72,7 @@ class ComplexProcessorTest {
     @DisplayName("Тестируем уведомления")
     void notifyTest() {
         //given
-        var message = Message
-                .builder()
-                .id(1L)
-                .field9("field9")
-                .build();
+        var message = new Message.Builder(1L).field9("field9").build();
 
         var listener = mock(Listener.class);
 
