@@ -1,10 +1,7 @@
 package ru.otus.model;
 
-import lombok.ToString;
-
 import java.util.List;
 
-@ToString
 public class ObjectForMessage implements Copyable<ObjectForMessage> {
     private List<String> data;
 
@@ -21,5 +18,12 @@ public class ObjectForMessage implements Copyable<ObjectForMessage> {
         var obj = new ObjectForMessage();
         obj.setData(List.copyOf(data));
         return obj;
+    }
+
+    @Override
+    public String toString() {
+        return "ObjectForMessage{" +
+                "data=" + data +
+                '}';
     }
 }

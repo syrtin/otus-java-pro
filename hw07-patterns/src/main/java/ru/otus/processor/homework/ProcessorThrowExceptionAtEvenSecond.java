@@ -1,12 +1,14 @@
 package ru.otus.processor.homework;
 
-import lombok.RequiredArgsConstructor;
 import ru.otus.exception.ProcessAtEvenSecondException;
 import ru.otus.model.Message;
 import ru.otus.processor.Processor;
 
-@RequiredArgsConstructor
 public class ProcessorThrowExceptionAtEvenSecond implements Processor {
+
+    public ProcessorThrowExceptionAtEvenSecond(TimeProvider timeProvider) {
+        this.timeProvider = timeProvider;
+    }
 
     private final TimeProvider timeProvider;
 

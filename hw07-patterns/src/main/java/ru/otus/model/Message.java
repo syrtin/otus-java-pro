@@ -1,8 +1,5 @@
 package ru.otus.model;
 
-import lombok.Getter;
-
-@Getter
 public class Message implements Copyable<Message> {
     private final long id;
     private final String field1;
@@ -36,6 +33,62 @@ public class Message implements Copyable<Message> {
         this.field11 = field11;
         this.field12 = field12;
         this.field13 = field13;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getField1() {
+        return field1;
+    }
+
+    public String getField2() {
+        return field2;
+    }
+
+    public String getField3() {
+        return field3;
+    }
+
+    public String getField4() {
+        return field4;
+    }
+
+    public String getField5() {
+        return field5;
+    }
+
+    public String getField6() {
+        return field6;
+    }
+
+    public String getField7() {
+        return field7;
+    }
+
+    public String getField8() {
+        return field8;
+    }
+
+    public String getField9() {
+        return field9;
+    }
+
+    public String getField10() {
+        return field10;
+    }
+
+    public String getField11() {
+        return field11;
+    }
+
+    public String getField12() {
+        return field12;
+    }
+
+    public ObjectForMessage getField13() {
+        return field13;
     }
 
     @Override
@@ -204,7 +257,7 @@ public class Message implements Copyable<Message> {
 
         public Message build() {
             return new Message(id, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10,
-            field11, field12, field13);
+                    field11, field12, field13);
         }
     }
 }
