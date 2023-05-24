@@ -19,7 +19,7 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
                         .stream()
                         .map(Field::getName)
                         .collect(Collectors.joining(", ")),
-                entityClassMetaData.getName().toLowerCase(),
+                entityClassMetaData.getName(),
                 entityClassMetaData.getIdField().getName());
     }
 

@@ -9,49 +9,61 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
-    private final Class<T> entityClass;
+    private final String name;
+    private final Field idField;
+    private final List<Field> allFields;
+    private final List<Field> nonIdFields;
+    private final Constructor<T> constructor;
 
     public EntityClassMetaDataImpl(Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
+        name = entityClass.getSimpleName().toLowerCase();
 
-    @Override
-    public String getName() {
-        return entityClass.getSimpleName();
-    }
+        allFields = Arrays.stream(entityClass.getDeclaredFields())
+                .collect(Collectors.toList());
 
-    @Override
-    public Constructor<T> getConstructor() {
+        idField = allFields.stream()
+                .filter(field -> field.isAnnotationPresent(Id.class))
+                .findFirst()
+                .get();
+
+        nonIdFields = allFields.stream()
+                .filter(field -> !field.isAnnotationPresent(Id.class))
+                .collect(Collectors.toList());
+
         try {
-            Field[] declaredFields = entityClass.getDeclaredFields();
-            Class<?>[] classTypes = new Class<?>[declaredFields.length];
-            for (int i = 0; i < declaredFields.length; i++) {
-                classTypes[i] = declaredFields[i].getType();
+            int fieldsAmount = allFields.size();
+            Class<?>[] classTypes = new Class<?>[fieldsAmount];
+            for (int i = 0; i < fieldsAmount; i++) {
+                classTypes[i] = allFields.get(i).getType();
             }
-            return entityClass.getConstructor(classTypes);
+            constructor = entityClass.getConstructor(classTypes);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Constructor<T> getConstructor() {
+        return constructor;
+    }
+
+    @Override
     public Field getIdField() {
-        return getAllFields().stream()
-                .filter(field -> field.isAnnotationPresent(Id.class))
-                .findFirst()
-                .get();
+        return idField;
     }
 
     @Override
     public List<Field> getAllFields() {
-        return Arrays.stream(entityClass.getDeclaredFields())
-                .collect(Collectors.toList());
+        return allFields;
     }
 
     @Override
     public List<Field> getFieldsWithoutId() {
-        return getAllFields().stream()
-                .filter(field -> !field.isAnnotationPresent(Id.class))
-                .collect(Collectors.toList());
+        return nonIdFields;
     }
 }
