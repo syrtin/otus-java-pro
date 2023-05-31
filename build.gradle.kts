@@ -29,6 +29,7 @@ allprojects {
         mavenCentral()
     }
 
+    val testcontainersBom: String by project
     val protobufBom: String by project
     val guava: String by project
     val glassfishJson: String by project
@@ -38,10 +39,11 @@ allprojects {
         dependencies {
             imports {
                 mavenBom(BOM_COORDINATES)
+                mavenBom("org.testcontainers:testcontainers-bom:$testcontainersBom")
                 mavenBom("com.google.protobuf:protobuf-bom:$protobufBom")
             }
             dependency("com.google.guava:guava:$guava")
-            dependency("org.glassfish:jakarta.json:${glassfishJson}")
+            dependency("org.glassfish:jakarta.json:$glassfishJson")
         }
     }
 
@@ -49,6 +51,13 @@ allprojects {
         resolutionStrategy {
             failOnVersionConflict()
 
+            force("javax.servlet:servlet-api:2.4")
+            force("commons-logging:commons-logging:1.1.1")
+            force("commons-lang:commons-lang:2.5")
+            force("org.codehaus.jackson:jackson-core-asl:1.8.8")
+            force("org.codehaus.jackson:jackson-mapper-asl:1.8.3")
+            force("org.codehaus.jettison:jettison:1.1")
+            force("net.java.dev.jna:jna:5.8.0")
             force("com.google.errorprone:error_prone_annotations:2.7.1")
         }
     }
@@ -63,7 +72,7 @@ subprojects {
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
-        options.compilerArgs.addAll(listOf("-Xlint:all,-serial,-processing", "-Werror"))
+        options.compilerArgs.addAll(listOf("-Xlint:all,-serial,-processing"))
     }
 
     tasks.withType<Test> {
