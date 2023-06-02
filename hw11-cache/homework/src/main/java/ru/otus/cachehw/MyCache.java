@@ -7,20 +7,11 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 public class MyCache<K, V> implements HwCache<K, V> {
-    int cacheLimit = 100;
     Map<K, V> cache = new WeakHashMap<>();
     List<HwListener<K, V>> listeners = new ArrayList<>();
 
     @Override
     public void put(K key, V value) {
-        if (cache.size() >= cacheLimit) {
-            System.gc();
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
         cache.put(key, value);
         listeners.forEach(l -> l.notify(key, value, "put"));
     }

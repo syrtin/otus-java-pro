@@ -3,6 +3,8 @@ package ru.otus;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.cachehw.HwCache;
+import ru.otus.cachehw.MyCache;
 import ru.otus.core.repository.executor.DbExecutorImpl;
 import ru.otus.core.sessionmanager.TransactionRunnerJdbc;
 import ru.otus.crm.datasource.DriverManagerDataSource;
@@ -33,8 +35,11 @@ public class HomeWork {
         EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl<>(entityClassMetaDataClient);
         var dataTemplateClient = new DataTemplateJdbc<Client>(dbExecutor, entitySQLMetaDataClient, entityClassMetaDataClient); //реализация DataTemplate, универсальная
 
+// Создание Кэша для сервиса клиента
+        HwCache<Long, Client> clientCache = new MyCache<>();
+
 // Код дальше должен остаться
-        var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
+        var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient, clientCache);
         dbServiceClient.saveClient(new Client("dbServiceFirst"));
 
         var clientSecond = dbServiceClient.saveClient(new Client("dbServiceSecond"));
@@ -48,7 +53,9 @@ public class HomeWork {
         EntitySQLMetaData entitySQLMetaDataManager = new EntitySQLMetaDataImpl<>(entityClassMetaDataManager);
         var dataTemplateManager = new DataTemplateJdbc<Manager>(dbExecutor, entitySQLMetaDataManager, entityClassMetaDataManager);
 
-        var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
+        HwCache<Long, Manager> managerCache = new MyCache<>();
+
+        var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager, managerCache);
         dbServiceManager.saveManager(new Manager("ManagerFirst"));
 
         var managerSecond = dbServiceManager.saveManager(new Manager("ManagerSecond"));

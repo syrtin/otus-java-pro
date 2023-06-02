@@ -3,7 +3,6 @@ package ru.otus.crm.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.cachehw.HwCache;
-import ru.otus.cachehw.MyCache;
 import ru.otus.core.repository.DataTemplate;
 import ru.otus.core.sessionmanager.TransactionRunner;
 import ru.otus.crm.model.Manager;
@@ -16,12 +15,14 @@ public class DbServiceManagerImpl implements DBServiceManager {
 
     private final DataTemplate<Manager> managerDataTemplate;
     private final TransactionRunner transactionRunner;
+    private final HwCache<Long, Manager> managerCache;
 
-    private final HwCache<Long, Manager> managerCache = new MyCache<>();
-
-    public DbServiceManagerImpl(TransactionRunner transactionRunner, DataTemplate<Manager> managerDataTemplate) {
+    public DbServiceManagerImpl(TransactionRunner transactionRunner,
+                                DataTemplate<Manager> managerDataTemplate,
+                                HwCache<Long, Manager> managerCache) {
         this.transactionRunner = transactionRunner;
         this.managerDataTemplate = managerDataTemplate;
+        this.managerCache = managerCache;
     }
 
     @Override
@@ -49,6 +50,7 @@ public class DbServiceManagerImpl implements DBServiceManager {
         return transactionRunner.doInTransaction(connection -> {
             var managerOptional = managerDataTemplate.findById(connection, no);
             log.info("manager: {}", managerOptional);
+            managerOptional.ifPresent(c -> managerCache.put(no, managerOptional.get()));
             return managerOptional;
         });
     }
