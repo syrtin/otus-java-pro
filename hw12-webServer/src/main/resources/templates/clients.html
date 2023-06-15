@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Клиенты</title>
+    <script>
+        function postNewClient() {
+            const clientNameContainer = document.getElementById('clientNameContainer');
+            const clientAddressContainer = document.getElementById('clientAddressContainer');
+            const clientPhonesContainer = document.getElementById('clientPhonesContainer');
+            const name = clientNameContainer.value;
+
+            const address = {
+                street: clientAddressContainer.value
+            };
+
+            const phoneNumbersString = clientPhonesContainer.value;
+            const phoneArray = phoneNumbersString.split(',');
+            console.log(phoneArray);
+            const phoneNumbersWithoutSpaces = phoneArray.map(phone => phone.trim());
+            const phones = phoneNumbersWithoutSpaces.map(phoneNumber => ({ number : phoneNumber}) );
+
+            const client = {
+                name: name,
+                address: address,
+                phones: phones
+            }
+
+            console.log(client);
+            console.log(JSON.stringify(client));
+
+            fetch('api/client/', {
+                method: "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(client)
+            })
+                .then(response => {
+                    location.reload();
+                })
+        }
+    </script>
+</head>
+
+<body>
+<h4>Добавить нового клиента в базу</h4>
+<input type="text" id="clientNameContainer" value="Иван" placeholder="Введите имя клиента">
+<input type="text" id="clientAddressContainer" value="Иваново, Иванова, 1" placeholder="Введите адрес клиента">
+<input type="text" id="clientPhonesContainer" value="+7900-000-0000, +7911-111-1111" placeholder="Введите телефоны клиента">
+<button onclick="postNewClient()">Добавить</button>
+<pre id="clientDataContainer"></pre>
+
+<h4>Список клиентов</h4>
+<table style="width: 800px">
+    <thead>
+    <tr>
+        <th style="width: 50px">Id</th>
+        <th style="width: 150px">Имя</th>
+        <th style="width: 300px">Адрес</th>
+        <th style="width: 300px">Телефоны</th>
+    </tr>
+    </thead>
+    <tbody>
+    <#list clients as client>
+    <tr>
+        <td>${client.id}</td>
+        <td>${client.name}</td>
+        <td>${client.address.street}</td>
+        <td>
+            <#list client.phones as phone>
+            ${phone.number}
+            </#list>
+        </td>
+    </tr>
+    </#list>
+    </tbody>
+</table>
+</body>
+</html>
