@@ -1,6 +1,5 @@
 package ru.otus.servlet;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,10 +34,5 @@ public class ClientsServlet extends HttpServlet {
 
         response.setContentType("text/html");
         response.getWriter().println(templateProcessor.getPage(CLIENTS_PAGE_TEMPLATE, paramsMap));
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
-        super.doPost(req, response);
     }
 }
