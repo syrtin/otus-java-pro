@@ -18,6 +18,29 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
         processConfig(initialConfigClass);
     }
 
+    @Override
+    public <C> C getAppComponent(Class<C> componentClass) {
+        List<Object> componentList = appComponents.stream()
+                .filter(c -> componentClass.isAssignableFrom(c.getClass()))
+                .toList();
+        var componentListSize = componentList.size();
+        if (componentListSize > 1) {
+            throw new RuntimeException(String.format("More than one component of class %s found", componentClass));
+        }
+        if (componentListSize == 0) {
+            throw new RuntimeException(String.format("No component of class %s found", componentClass));
+        }
+        return (C) componentList.get(0);
+    }
+
+    @Override
+    public <C> C getAppComponent(String componentName) {
+        if (!appComponentsByName.containsKey(componentName)) {
+            throw new RuntimeException(String.format("No component by name %s found", componentName));
+        }
+        return (C) appComponentsByName.get(componentName);
+    }
+
     private void processConfig(Class<?> configClass) {
         checkConfigClass(configClass);
 
@@ -54,35 +77,11 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
             appComponentsByName.putIfAbsent(componentName, component);
             appComponents.add(component);
         }
-
     }
 
     private void checkConfigClass(Class<?> configClass) {
         if (!configClass.isAnnotationPresent(AppComponentsContainerConfig.class)) {
             throw new IllegalArgumentException(String.format("Given class is not config %s", configClass.getName()));
         }
-    }
-
-    @Override
-    public <C> C getAppComponent(Class<C> componentClass) {
-        List<Object> componentList = appComponents.stream()
-                .filter(c -> componentClass.isAssignableFrom(c.getClass()))
-                .toList();
-        var componentListSize = componentList.size();
-        if (componentListSize > 1) {
-            throw new RuntimeException(String.format("More than one component of class %s found", componentClass));
-        }
-        if (componentListSize == 0) {
-            throw new RuntimeException(String.format("No component of class %s found", componentClass));
-        }
-        return (C) componentList.get(0);
-    }
-
-    @Override
-    public <C> C getAppComponent(String componentName) {
-        if (!appComponentsByName.containsKey(componentName)) {
-            throw new RuntimeException(String.format("No component by name %s found", componentName));
-        }
-        return (C) appComponentsByName.get(componentName);
     }
 }
