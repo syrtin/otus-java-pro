@@ -13,6 +13,7 @@ include("hw11-cache:homework")
 include("hw12-webServer")
 include("hw13-di:homework")
 include("hw14-springDataJdbc")
+include("hw15-concurrentCollections:QueueDemo")
 
 pluginManagement {
     val jgitver: String by settings
@@ -31,4 +32,3 @@ pluginManagement {
         id("com.google.protobuf") version protobufVer
     }
 }
-
