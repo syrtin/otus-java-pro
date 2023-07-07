@@ -1,0 +1,24 @@
+### CLIENT POST VALID
+POST /api/client HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Сидоров",
+  "address": {
+    "street": "Иваново, Петрова-Водкина, 1"
+  },
+  "phones": [
+    {
+      "phoneNumber": "+7953-010-0000"
+    },
+    {
+      "phoneNumber": "+7968-121-1111"
+    }
+  ]
+}
+
+### CLIENTS GET
+GET /api/client HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
