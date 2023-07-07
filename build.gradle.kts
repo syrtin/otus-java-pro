@@ -34,6 +34,7 @@ allprojects {
     val guava: String by project
     val glassfishJson: String by project
     val reflections: String by project
+    val lombok: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {

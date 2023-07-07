@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml" content="text/html;">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="addSection">
+        <meta charset="UTF-8">
+        <h3>Add new client into DB</h3>
+        <input type="text" id="clientNameContainer" value="Иван" placeholder="Insert client's name">
+        <input type="text" id="clientAddressContainer" value="Иваново, Иванова, 1" placeholder="Insert client's name">
+        <input type="text" id="clientPhonesContainer" value="+7900-000-0000, +7911-111-1111"
+               placeholder="Insert client's phones">
+        <button onclick="postNewClient()">Add client</button>
+    </div>
+    <pre id="clientDataContainer"></pre>
+    <h3>List of clients</h3>
+    <table id="clientTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Table body will be dynamically filled by JS -->
+        </tbody>
+    </table>
+    <script src="scripts.js"></script>
+</div>
+</body>
+</html>
