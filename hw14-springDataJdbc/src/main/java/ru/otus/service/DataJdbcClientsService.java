@@ -13,7 +13,7 @@ import java.util.List;
 public class DataJdbcClientsService implements ClientService{
     private static final Logger log = LoggerFactory.getLogger(DataJdbcClientsService.class);
 
-    ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
 
     public DataJdbcClientsService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
