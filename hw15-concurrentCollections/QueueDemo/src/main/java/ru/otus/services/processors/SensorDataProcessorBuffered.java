@@ -35,7 +35,7 @@ public class SensorDataProcessorBuffered implements SensorDataProcessor {
     public void flush() {
         try {
             var sensorData = new ArrayList<SensorData>();
-            if (dataBuffer.drainTo(sensorData, bufferSize) > 0) {
+            if (!dataBuffer.isEmpty() && dataBuffer.drainTo(sensorData, bufferSize) > 0) {
                 writer.writeBufferedData(sensorData);
             }
         } catch (Exception e) {
