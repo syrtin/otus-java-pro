@@ -14,6 +14,7 @@ include("hw12-webServer")
 include("hw13-di:homework")
 include("hw14-springDataJdbc")
 include("hw15-concurrentCollections:QueueDemo")
+include("hw16-multiprocess")
 
 pluginManagement {
     val jgitver: String by settings
