@@ -11,7 +11,7 @@ public class ClientStreamObserver implements io.grpc.stub.StreamObserver<NumberR
 
     @Override
     public void onNext(NumberResponse response) {
-        lastNumber = response.getValue();
+        setLastNumber(response.getValue());
         log.info("new value:{}", lastNumber);
     }
 
@@ -29,5 +29,9 @@ public class ClientStreamObserver implements io.grpc.stub.StreamObserver<NumberR
         var accountingNumber = lastNumber;
         lastNumber = 0;
         return accountingNumber;
+    }
+
+    public synchronized void setLastNumber(int lastNumber) {
+        this.lastNumber = lastNumber;
     }
 }
