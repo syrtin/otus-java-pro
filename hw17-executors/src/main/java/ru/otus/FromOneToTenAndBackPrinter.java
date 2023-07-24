@@ -20,7 +20,7 @@ public class FromOneToTenAndBackPrinter {
         t2.start();
     }
 
-    public void count() {
+    private void count() {
         while (!Thread.currentThread().isInterrupted()) {
             for (int i = 1; i <= 10; i++) {
                 logger.info(String.valueOf(i));
@@ -33,7 +33,7 @@ public class FromOneToTenAndBackPrinter {
         }
     }
 
-    public void sleep() {
+    private static void sleep() {
         try {
             Thread.sleep(1_000);
         } catch (InterruptedException e) {
