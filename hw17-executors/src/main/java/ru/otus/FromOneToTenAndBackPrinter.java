@@ -20,22 +20,30 @@ public class FromOneToTenAndBackPrinter {
         t2.start();
     }
 
-    private void count() {
+    private synchronized void count() {
         while (!Thread.currentThread().isInterrupted()) {
-            for (int i = 1; i <= 10; i++) {
-                logger.info(String.valueOf(i));
-                sleep();
-            }
-            for (int i = 9; i > 1; i--) {
-                logger.info(String.valueOf(i));
-                sleep();
+            try {
+                for (int i = 1; i <= 10; i++) {
+                    logger.info(String.valueOf(i));
+                    sleep();
+                    notifyAll();
+                    wait();
+                }
+                for (int i = 9; i > 1; i--) {
+                    logger.info(String.valueOf(i));
+                    sleep();
+                    notifyAll();
+                    wait();
+                }
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
             }
         }
     }
 
     private static void sleep() {
         try {
-            Thread.sleep(1_000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
             Thread.currentThread().interrupt();
