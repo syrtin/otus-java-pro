@@ -26,7 +26,6 @@ public class FromOneToTenAndBackPrinter {
                     logger.info(String.valueOf(i));
                     sleep();
                     notifyAll();
-                    wait();
                 }
                 for (int i = 9; i > 1; i--) {
 
@@ -38,7 +37,6 @@ public class FromOneToTenAndBackPrinter {
                     logger.info(String.valueOf(i));
                     sleep();
                     notifyAll();
-                    wait();
                 }
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
