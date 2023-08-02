@@ -1,4 +1,4 @@
-package ru.petrelevich.service;
+package ru.otus.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
-import ru.petrelevich.domain.Message;
-import ru.petrelevich.repository.MessageRepository;
+import ru.otus.domain.Message;
+import ru.otus.repository.MessageRepository;
 
 import java.time.Duration;
 
